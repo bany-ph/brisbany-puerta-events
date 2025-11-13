@@ -1,0 +1,15 @@
+package bany.events.repositories.interfaces;
+
+import bany.events.dtos.request.EventRequest;
+import bany.events.dtos.response.EventResponse;
+
+import java.util.List;
+import java.util.Optional;
+
+public interface EventRepository {
+    EventResponse save (EventRequest event);
+    List<EventResponse> findAll ();
+    Optional<EventResponse> findById(Long id);
+    EventResponse update(EventRequest event);
+    void delete (Long id);
+}
