@@ -9,4 +9,5 @@ public class EventResponse {
     String date;
     Long idVenue;
     String venueName;
+    String venueLocation;
 }
