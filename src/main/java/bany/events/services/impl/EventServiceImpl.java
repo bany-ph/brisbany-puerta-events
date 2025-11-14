@@ -25,7 +25,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public List<EventResponse> findAll() {
-        return List.of();
+        return eventRepository.findAll();
     }
 
     @Override
