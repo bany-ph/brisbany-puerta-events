@@ -10,6 +10,6 @@ public interface EventRepository {
     EventResponse save (EventRequest event);
     List<EventResponse> findAll ();
     Optional<EventResponse> findById(Long id);
-    EventResponse update(EventRequest event);
+    EventResponse update(Long id,EventRequest event);
     void delete (Long id);
 }
