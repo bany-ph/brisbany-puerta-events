@@ -1,13 +1,21 @@
 package bany.events.repositories.impl;
 
+import bany.events.dtos.request.EventFilterRequest;
 import bany.events.dtos.request.EventRequest;
 import bany.events.dtos.response.EventResponse;
+import bany.events.dtos.response.PageResponse;
 import bany.events.exceptions.ResourceNotFoundException;
 import bany.events.mappers.EventMapper;
 import bany.events.models.Event;
+import bany.events.repositories.jpa.EventJpa;
 import bany.events.repositories.interfaces.EventRepository;
 import org.springframework.context.annotation.Primary;
-import org.springframework.data.jpa.repository.JpaRepository;
+
+import org.springframework.context.annotation.Profile;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,6 +23,7 @@ import java.util.Optional;
 
 @Repository
 @Primary
+@Profile("!memory")
 public class EventJpaRepositoryImpl  implements EventRepository {
 
     private final EventJpa jpa;
@@ -63,7 +72,38 @@ public class EventJpaRepositoryImpl  implements EventRepository {
         jpa.deleteById(id);
     }
 
-    public interface EventJpa extends JpaRepository<Event,Long>{
+    @Override
+    public PageResponse<EventResponse> findAllPaginated(EventFilterRequest filter) {
+        Sort sort = filter.getDirection().equalsIgnoreCase("DESC") ?
+                Sort.by(filter.getSortBy()).descending() :
+                Sort.by(filter.getSortBy()).ascending();
 
+        Pageable pageable = PageRequest.of(
+                filter.getPage(),
+                filter.getSize(),
+                sort
+        );
+
+        Page<Event> eventPage = jpa.findByFilters(
+                filter.getName(),
+                filter.getLocation(),
+                filter.getDate(),
+                pageable
+        );
+
+        List<EventResponse> eventResponses = eventPage.getContent().stream()
+                .map(EventMapper.EVENT_INSTANCE::toResponseDto).toList();
+
+
+        return PageResponse.<EventResponse>builder()
+                .content(eventResponses)
+                .pageNumber(eventPage.getNumber())
+                .pageSize(eventPage.getSize())
+                .totalElements(eventPage.getTotalElements())
+                .totalPages(eventPage.getTotalPages())
+                .last(eventPage.isLast())
+                .first(eventPage.isFirst())
+                .build();
     }
+
 }

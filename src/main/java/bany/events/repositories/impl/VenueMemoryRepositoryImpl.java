@@ -5,6 +5,7 @@ import bany.events.exceptions.ResourceNotFoundException;
 import bany.events.mappers.VenueMapper;
 import bany.events.models.Venue;
 import bany.events.repositories.interfaces.VenueRepository;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Repository
+@Profile("memory")
 public class VenueMemoryRepositoryImpl implements VenueRepository {
 
     private final List<Venue> venues = new java.util.ArrayList<>();
