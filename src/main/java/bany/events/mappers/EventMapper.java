@@ -20,6 +20,7 @@ public interface EventMapper {
     EventResponse toResponseDto(Event event);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(source = "idVenue", target = "venue.id")
     Event toEntity(EventRequest eventRequest);
 
 }

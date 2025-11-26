@@ -16,16 +16,14 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 200,nullable = false)
+    @Column(length = 200,nullable = false, unique = true)
     private String name;
 
     @JsonFormat(pattern="dd-MM-yyyy")
     private String date;
 
+    @ManyToOne
     @JoinColumn(name = "id_venue")
-    @OneToOne
     private Venue venue;
 
-    @Transient
-    private Long idVenue;
 }
