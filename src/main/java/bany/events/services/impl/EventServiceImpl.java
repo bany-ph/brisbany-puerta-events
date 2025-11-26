@@ -1,11 +1,14 @@
 package bany.events.services.impl;
 
+import bany.events.dtos.request.EventFilterRequest;
 import bany.events.dtos.request.EventRequest;
 import bany.events.dtos.response.EventResponse;
+import bany.events.dtos.response.PageResponse;
 import bany.events.exceptions.ResourceNotFoundException;
 import bany.events.repositories.interfaces.EventRepository;
 import bany.events.services.interfaces.EventService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -24,10 +27,12 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<EventResponse> findAll() {
         return eventRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public EventResponse findById(Long id) {
         return eventRepository.findById(id)
@@ -42,5 +47,11 @@ public class EventServiceImpl implements EventService {
     @Override
     public void delete(Long id) {
         eventRepository.delete(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public PageResponse<EventResponse> findAllPaginated(EventFilterRequest filter) {
+        return eventRepository.findAllPaginated(filter);
     }
 }

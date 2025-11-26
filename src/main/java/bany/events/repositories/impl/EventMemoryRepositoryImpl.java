@@ -1,11 +1,14 @@
 package bany.events.repositories.impl;
 
+import bany.events.dtos.request.EventFilterRequest;
 import bany.events.dtos.request.EventRequest;
 import bany.events.dtos.response.EventResponse;
+import bany.events.dtos.response.PageResponse;
 import bany.events.exceptions.ResourceNotFoundException;
 import bany.events.mappers.EventMapper;
 import bany.events.models.Event;
 import bany.events.repositories.interfaces.EventRepository;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -14,6 +17,7 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Repository
+@Profile("memory")
 public class EventMemoryRepositoryImpl implements EventRepository {
 
     private final List<Event> events = new ArrayList<>();
@@ -69,6 +73,11 @@ public class EventMemoryRepositoryImpl implements EventRepository {
         }
         events.removeIf(event -> event.getId().equals(id));
         idGenerator.getAndDecrement();
+    }
+
+    @Override
+    public PageResponse<EventResponse> findAllPaginated(EventFilterRequest filter) {
+        return null;
     }
 
 

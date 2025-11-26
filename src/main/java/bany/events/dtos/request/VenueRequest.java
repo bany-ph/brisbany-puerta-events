@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 
 public class VenueRequest {
     @NotBlank(message = "name is mandatory")
-    String name;
+    private String name;
 
     @NotBlank(message = "Location is mandatory")
-    String location;
+    private String location;
 }

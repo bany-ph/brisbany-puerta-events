@@ -14,10 +14,13 @@ public interface EventMapper {
 
     EventMapper EVENT_INSTANCE = Mappers.getMapper(EventMapper.class);
 
-    @Mapping(source = "idVenue", target = "idVenue")
+    @Mapping(source = "venue.id", target = "idVenue")
+    @Mapping(source = "venue.name", target = "venueName")
+    @Mapping(source = "venue.location", target = "venueLocation")
     EventResponse toResponseDto(Event event);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(source = "idVenue", target = "venue.id")
     Event toEntity(EventRequest eventRequest);
 
 }

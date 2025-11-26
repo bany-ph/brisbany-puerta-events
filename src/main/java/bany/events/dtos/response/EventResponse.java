@@ -4,9 +4,10 @@ import lombok.Data;
 
 @Data
 public class EventResponse {
-    Long id;
-    String name;
-    String date;
-    Long idVenue;
-    String venueName;
+    private Long id;
+    private String name;
+    private String date;
+    private Long idVenue;
+    private String venueName;
+    private String venueLocation;
 }

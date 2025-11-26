@@ -6,6 +6,7 @@ import bany.events.models.Venue;
 import bany.events.repositories.interfaces.VenueRepository;
 import bany.events.services.interfaces.VenueService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,11 +24,13 @@ public class VenueServiceImpl implements VenueService {
         return venueRepository.save(venueRequest);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<Venue> findAll() {
         return venueRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Venue findById(Long id) {
         return venueRepository.findById(id)
