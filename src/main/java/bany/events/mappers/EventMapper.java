@@ -3,7 +3,7 @@ package bany.events.mappers;
 import bany.events.dtos.request.EventRequest;
 import bany.events.dtos.response.EventResponse;
 
-import bany.events.models.Event;
+import bany.events.entities.EventEntity;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -17,10 +17,10 @@ public interface EventMapper {
     @Mapping(source = "venue.id", target = "idVenue")
     @Mapping(source = "venue.name", target = "venueName")
     @Mapping(source = "venue.location", target = "venueLocation")
-    EventResponse toResponseDto(Event event);
+    EventResponse toResponseDto(EventEntity eventEntity);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(source = "idVenue", target = "venue.id")
-    Event toEntity(EventRequest eventRequest);
+    EventEntity toEntity(EventRequest eventRequest);
 
 }

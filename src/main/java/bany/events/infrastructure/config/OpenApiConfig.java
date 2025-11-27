@@ -1,4 +1,4 @@
-package bany.events.config;
+package bany.events.infrastructure.config;
 
 
 import io.swagger.v3.oas.models.OpenAPI;

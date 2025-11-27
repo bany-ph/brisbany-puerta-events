@@ -4,9 +4,9 @@ import bany.events.dtos.request.EventFilterRequest;
 import bany.events.dtos.request.EventRequest;
 import bany.events.dtos.response.EventResponse;
 import bany.events.dtos.response.PageResponse;
+import bany.events.entities.EventEntity;
 import bany.events.exceptions.ResourceNotFoundException;
 import bany.events.mappers.EventMapper;
-import bany.events.models.Event;
 import bany.events.repositories.jpa.EventJpa;
 import bany.events.repositories.interfaces.EventRepository;
 import org.springframework.context.annotation.Primary;
@@ -48,7 +48,7 @@ public class EventJpaRepositoryImpl  implements EventRepository {
 
     @Override
     public Optional<EventResponse> findById(Long id) {
-        Optional<Event> foundEvent = jpa.findById(id);
+        Optional<EventEntity> foundEvent = jpa.findById(id);
         if(foundEvent.isEmpty()){
             throw new ResourceNotFoundException("Event", id);
         }
@@ -58,13 +58,13 @@ public class EventJpaRepositoryImpl  implements EventRepository {
 
     @Override
     public EventResponse update(Long id, EventRequest event) {
-        Optional<Event> foundEvent = jpa.findById(id);
+        Optional<EventEntity> foundEvent = jpa.findById(id);
         if(foundEvent.isEmpty()){
             throw new ResourceNotFoundException("Event", id);
         }
-        Event updatedEvent = EventMapper.EVENT_INSTANCE.toEntity(event);
-        updatedEvent.setId(id);
-        return EventMapper.EVENT_INSTANCE.toResponseDto(jpa.save(updatedEvent));
+        EventEntity updatedEventEntity = EventMapper.EVENT_INSTANCE.toEntity(event);
+        updatedEventEntity.setId(id);
+        return EventMapper.EVENT_INSTANCE.toResponseDto(jpa.save(updatedEventEntity));
     }
 
     @Override
@@ -84,7 +84,7 @@ public class EventJpaRepositoryImpl  implements EventRepository {
                 sort
         );
 
-        Page<Event> eventPage = jpa.findByFilters(
+        Page<EventEntity> eventPage = jpa.findByFilters(
                 filter.getName(),
                 filter.getLocation(),
                 filter.getDate(),

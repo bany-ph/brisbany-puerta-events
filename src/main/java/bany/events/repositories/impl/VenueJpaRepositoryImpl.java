@@ -1,9 +1,9 @@
 package bany.events.repositories.impl;
 
 import bany.events.dtos.request.VenueRequest;
+import bany.events.entities.VenueEntity;
 import bany.events.exceptions.ResourceNotFoundException;
 import bany.events.mappers.VenueMapper;
-import bany.events.models.Venue;
 import bany.events.repositories.interfaces.VenueRepository;
 import bany.events.repositories.jpa.VenueJpa;
 import org.springframework.context.annotation.Primary;
@@ -25,29 +25,29 @@ public class VenueJpaRepositoryImpl implements VenueRepository {
     }
 
     @Override
-    public Venue save(VenueRequest event) {
+    public VenueEntity save(VenueRequest event) {
         return venueJpa.save(VenueMapper.VENUE_INSTANCE.toEntity(event));
     }
 
     @Override
-    public List<Venue> findAll() {
+    public List<VenueEntity> findAll() {
         return venueJpa.findAll();
     }
 
     @Override
-    public Optional<Venue> findById(Long id) {
+    public Optional<VenueEntity> findById(Long id) {
         return venueJpa.findById(id);
     }
 
     @Override
-    public Venue update(Long id, VenueRequest event) {
-        Optional<Venue> foundVenue = venueJpa.findById(id);
+    public VenueEntity update(Long id, VenueRequest event) {
+        Optional<VenueEntity> foundVenue = venueJpa.findById(id);
         if(foundVenue.isEmpty()){
-           throw new ResourceNotFoundException("Venue", id);
+           throw new ResourceNotFoundException("VenueEntity", id);
         }
-        Venue updatedVenue = VenueMapper.VENUE_INSTANCE.toEntity(event);
-        updatedVenue.setId(id);
-        return venueJpa.save(updatedVenue);
+        VenueEntity updatedVenueEntity = VenueMapper.VENUE_INSTANCE.toEntity(event);
+        updatedVenueEntity.setId(id);
+        return venueJpa.save(updatedVenueEntity);
     }
 
     @Override

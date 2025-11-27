@@ -1,4 +1,4 @@
-package bany.events.models;
+package bany.events.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "events")
-public class Event {
+public class EventEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,6 +24,6 @@ public class Event {
 
     @ManyToOne
     @JoinColumn(name = "id_venue")
-    private Venue venue;
+    private VenueEntity venueEntity;
 
 }

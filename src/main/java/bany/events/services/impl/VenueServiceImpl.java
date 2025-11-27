@@ -1,8 +1,8 @@
 package bany.events.services.impl;
 
 import bany.events.dtos.request.VenueRequest;
+import bany.events.entities.VenueEntity;
 import bany.events.exceptions.ResourceNotFoundException;
-import bany.events.models.Venue;
 import bany.events.repositories.interfaces.VenueRepository;
 import bany.events.services.interfaces.VenueService;
 import org.springframework.stereotype.Service;
@@ -20,25 +20,25 @@ public class VenueServiceImpl implements VenueService {
     }
 
     @Override
-    public Venue save(VenueRequest venueRequest) {
+    public VenueEntity save(VenueRequest venueRequest) {
         return venueRepository.save(venueRequest);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public List<Venue> findAll() {
+    public List<VenueEntity> findAll() {
         return venueRepository.findAll();
     }
 
     @Transactional(readOnly = true)
     @Override
-    public Venue findById(Long id) {
+    public VenueEntity findById(Long id) {
         return venueRepository.findById(id)
-                .orElseThrow(()-> new ResourceNotFoundException("Venue", id));
+                .orElseThrow(()-> new ResourceNotFoundException("VenueEntity", id));
     }
 
     @Override
-    public Venue update(Long id, VenueRequest venueRequest) {
+    public VenueEntity update(Long id, VenueRequest venueRequest) {
         return venueRepository.update(id, venueRequest);
     }
 
