@@ -1,0 +1,18 @@
+package bany.events.infrastructure.adapter.in.web.dtos.request;
+
+import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+
+public class VenueRequest {
+    @NotBlank(message = "name is mandatory")
+    private String name;
+
+    @NotBlank(message = "Location is mandatory")
+    private String location;
+}
